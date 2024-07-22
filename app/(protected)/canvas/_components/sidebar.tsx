@@ -11,16 +11,18 @@ import {useImgStore} from "@/hooks/add-img-canvas"
 
 const Sidebar = () => {
 
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState<{ id: string; url: string; userId: string; createdAt: Date }[]>([]);
   const setSelectedImage = useImgStore((state) => state.setSelectedImage) 
 
   useEffect(() => {
 
   const getImg = async () => {
-      const imgs = await uploadImage()
-      if(imgs){
-        setImages(imgs)
-      } 
+      const imgs = await uploadImage();
+      if (Array.isArray(imgs)) {
+        setImages(imgs);
+      } else {
+        console.error(imgs.error);
+      }
   }
     getImg()
     

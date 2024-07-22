@@ -23,7 +23,7 @@ const nextConfig = {
       ]
     },
   typescript : {
-    ignoreBuildErrors
+    ignoreBuildErrors: true
   }
 
   }

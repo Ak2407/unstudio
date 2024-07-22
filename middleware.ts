@@ -17,6 +17,7 @@ export default auth((req) => {
   if (isApiAuthRoute) {
     return undefined;
   }
+  
 
   if (isAuthRoute) {
     if (isLoggedIn) {

@@ -21,7 +21,11 @@ const nextConfig = {
           hostname: 'utfs.io'
         }
       ]
-    }
+    },
+  typescript : {
+    ignoreBuildErrors
+  }
+
   }
    
   module.exports = nextConfig

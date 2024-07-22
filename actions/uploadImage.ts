@@ -8,7 +8,7 @@ export const uploadImage = async () => {
 
   const session = await auth();
 
-  const userId = session?.userId
+  const userId = session?.userdId
 
 
 

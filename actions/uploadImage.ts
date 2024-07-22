@@ -5,13 +5,15 @@ import { getUserById } from "@/data/user";
 import prisma from "@/db";
 
 export const uploadImage = async () => {
-
   const session = await auth();
 
-  const userId = session?.user?.id
+  const userId = session?.user?.id;
 
+  if (!userId) {
+    return { error: "User ID not found" };
+  }
 
-  const existingUser = await getUserById(userId) 
+  const existingUser = await getUserById(userId);
 
   if (!existingUser) {
     return { error: "User Not found" };
@@ -19,11 +21,11 @@ export const uploadImage = async () => {
 
   const images = await prisma.image.findMany({
     where: {
-      userId: userId
+      userId: userId,
     },
     orderBy: {
-      createdAt: "desc"     
-    } 
+      createdAt: "desc",
+    },
   });
 
   return images;

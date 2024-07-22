@@ -40,6 +40,7 @@ GOOGLE\_CLIENT\_ID=
 
 GOOGLE\_CLIENT\_SECRET=
 
+You can copy contents from .env.example into local .env file
   
 
 //from [www.uploadthing.com](https://uploadthing.com/)
@@ -47,3 +48,5 @@ GOOGLE\_CLIENT\_SECRET=
 UPLOADTHING\_SECRET=
 
 UPLOADTHING\_APP\_ID=
+
+Live Link for application : [https://unstudio-kappa.vercel.app/](https://unstudio-kappa.vercel.app/)

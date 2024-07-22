@@ -13,16 +13,18 @@ const nextConfig = {
     return config;
   },
 
-
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'utfs.io'
-      }
-    ]
+        protocol: "https",
+        hostname: "utfs.io",
+      },
+    ],
   },
+  // typescript:
+  // {
+  //   ignoreBuildErrors: true
+  // }
+};
 
-}
-
-module.exports = nextConfig
+module.exports = nextConfig;

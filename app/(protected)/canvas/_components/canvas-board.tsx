@@ -25,18 +25,20 @@ const CanvasBoard = () => {
 
       // Handle object selection
       canvas.on("selection:created", (e) => {
-        const selectedObject = e.selected[0];
-        if (selectedObject && deleteButtonRef.current) {
-          const { left, top, width, height } = selectedObject.getBoundingRect();
-          deleteButtonRef.current.style.left = `${left + width / 5}px`;
-          deleteButtonRef.current.style.top = `${top - height / 2}px`;
-          deleteButtonRef.current.style.display = "block";
+        if (e.selected && e.selected.length > 0) {
+          const selectedObject = e.selected[0];
+          if (selectedObject && deleteButtonRef.current) {
+            const { left, top, width, height } = selectedObject.getBoundingRect();
+            deleteButtonRef.current.style.left = `${left + width / 5}px`;
+            deleteButtonRef.current.style.top = `${top - height / 2}px`;
+            deleteButtonRef.current.style.display = "block";
 
-          deleteButtonRef.current.onclick = () => {
-            canvas.remove(selectedObject);
-            if (deleteButtonRef.current)
-              deleteButtonRef.current.style.display = "none";
-          };
+            deleteButtonRef.current.onclick = () => {
+              canvas.remove(selectedObject);
+              if (deleteButtonRef.current)
+                deleteButtonRef.current.style.display = "none";
+            };
+          }
         }
       });
 

@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { auth } from "@/auth";
 import prisma from "@/db";
+import { v4 as uuidv4 } from "uuid";
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION,
@@ -11,22 +12,29 @@ const s3Client = new S3Client({
   },
 });
 
+function generateUniqueFileName(originalFileName: string) {
+  const fileExtension = originalFileName.split(".").pop();
+  const uniqueId = `${Date.now()}-${uuidv4()}`;
+  return `${uniqueId}.${fileExtension}`;
+}
+
 async function uploadFileToS3(file: Buffer, fileName: string) {
   const fileBuffer = file;
-  const folderPath = "image/";
-  const filePath = `${folderPath}${fileName}`;
+  const folderPath = "blob/";
+  const uniqueFileName = generateUniqueFileName(fileName);
+  const filePath = `${folderPath}${uniqueFileName}`;
 
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: filePath,
     Body: fileBuffer,
-    ContentType: "image/jpeg",
+    ContentType: "video/webm",
   };
 
   const command = new PutObjectCommand(params);
   const result = await s3Client.send(command);
 
-  const url = `${process.env.IMAGE_KIT_URL}/image/${fileName}`;
+  const url = `${process.env.IMAGE_KIT_URL}/blob/${uniqueFileName}`;
 
   if (result) {
     const session = await auth();
@@ -35,7 +43,7 @@ async function uploadFileToS3(file: Buffer, fileName: string) {
 
     const userId = session?.user?.id;
 
-    const uploadedFile = await prisma.image.create({
+    const uploadedFile = await prisma.blob.create({
       data: {
         url: url,
         userId: userId as string,

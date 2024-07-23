@@ -28,20 +28,21 @@ model Account {
 }
 
 model User {
-  id            String    @id @default(cuid())
+    id            String    @id @default(cuid())
     name          String?
     email         String?   @unique
     emailVerified DateTime? @map("email_verified")
     image         String?
     password      String?
     accounts      Account[]
-    images        Image[]   // Relationship to the Image model
+    images        Image[]   
+    blobs         Blob[]
 
     @@map("users")
 }
 
 model Image {
-  id        String   @id @default(cuid())
+    id        String   @id @default(cuid())
     url       String
     userId    String
     user      User     @relation(fields: [userId], references: [id])
@@ -49,4 +50,15 @@ model Image {
 
     createdAt DateTime @default(now())
     @@map("images")
+}
+
+model Blob {
+    id        String   @id @default(cuid())
+    url       String
+    userId    String
+    user      User     @relation(fields: [userId], references: [id])
+
+
+    createdAt DateTime @default(now())
+    @@map("blobs")
 }

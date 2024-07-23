@@ -1,12 +1,8 @@
 import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import MobileSidebar from "./mobile-sidebar";
-// import ScreenRecord from "./screen-record";
+import ScreenRecord from "./screen-record";
 import dynamic from "next/dynamic";
-
-// const ScreenRecord = dynamic(() => import("./screen-record"), {
-//   ssr: false, // This ensures the component is only rendered on the client side
-// });
 
 const Navbar = () => {
   return (
@@ -15,7 +11,7 @@ const Navbar = () => {
       <div className="md:max-w-screen-2xl mx-auto flex items-center w-full justify-between">
         <h1 className="text-3xl font-extrabold">Unstudio</h1>
         <div className="space-x-4  flex items-center justify-between">
-          {/* <ScreenRecord /> */}
+          <ScreenRecord />
           <form
             action={async () => {
               "use server";

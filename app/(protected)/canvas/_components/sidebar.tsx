@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { uploadImage } from "@/actions/uploadImage";
+import { getBlob } from "@/actions/getBlob";
 import { useImgStore } from "@/hooks/add-img-canvas";
 import { Button } from "@/components/ui/button";
 import { UploadIcon } from "lucide-react";
@@ -15,6 +16,7 @@ const Sidebar = () => {
   const [images, setImages] = useState<
     { id: string; url: string; userId: string; createdAt: Date }[]
   >([]);
+  const [blobs, setBlobs] = useState<string[]>([]); // Explicitly type the state as an array of strings
   const setSelectedImage = useImgStore((state) => state.setSelectedImage);
   const [uploading, setUploading] = useState<boolean>(false);
   const [file, setFile] = useState(null);
@@ -25,10 +27,21 @@ const Sidebar = () => {
       if (Array.isArray(imgs)) {
         setImages(imgs);
       } else {
-        console.error(imgs.error);
       }
     };
     getImg();
+
+    const getBlobs = async () => {
+      const blobs = await getBlob();
+      if (Array.isArray(blobs)) {
+        console.log("hi");
+        console.log(blobs);
+        setBlobs(blobs);
+      } else {
+        setBlobs([]);
+      }
+    };
+    getBlobs();
   }, []);
 
   const router = useRouter();
@@ -108,6 +121,19 @@ const Sidebar = () => {
             width={150}
             className="aspect-video cursor-pointer hover:opacity-80"
             alt="img-1"
+          />
+        ))}
+      </div>
+
+      <Separator className="mt-4 mb-4" />
+      <h1 className="text-2xl font-semibold mb-6">Screen Recording</h1>
+
+      <div className="p-4  gap-4  grid grid-cols-2 ">
+        {blobs.map((blob, index) => (
+          <video
+            key={index}
+            src={blob.url}
+            className="aspect-video cursor-pointer hover:opacity-80 "
           />
         ))}
       </div>

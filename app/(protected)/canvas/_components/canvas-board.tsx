@@ -1,19 +1,18 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import {fabric} from "fabric";
+import { fabric } from "fabric";
 import ShapesContainer from "./shapes-container";
-import {useImgStore} from "@/hooks/add-img-canvas"
+import { useImgStore } from "@/hooks/add-img-canvas";
 import { Button } from "@/components/ui/button";
 import { XCircle } from "lucide-react";
-
 
 const CanvasBoard = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const deleteButtonRef = useRef<HTMLButtonElement | null>(null);
   const selectedImage = useImgStore((state) => state.selectedImage);
-  const clearSelectedImage  = useImgStore((state) => state.clearSelectedImage);
+  const clearSelectedImage = useImgStore((state) => state.clearSelectedImage);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -28,7 +27,8 @@ const CanvasBoard = () => {
         if (e.selected && e.selected.length > 0) {
           const selectedObject = e.selected[0];
           if (selectedObject && deleteButtonRef.current) {
-            const { left, top, width, height } = selectedObject.getBoundingRect();
+            const { left, top, width, height } =
+              selectedObject.getBoundingRect();
             deleteButtonRef.current.style.left = `${left + width / 5}px`;
             deleteButtonRef.current.style.top = `${top - height / 2}px`;
             deleteButtonRef.current.style.display = "block";
@@ -55,19 +55,16 @@ const CanvasBoard = () => {
     }
   }, []);
   useEffect(() => {
-    console.log("here")
     if (selectedImage && fabricCanvasRef.current) {
       fabric.Image.fromURL(selectedImage, (img) => {
         img.scaleToWidth(200);
         img.scaleToHeight(200);
         fabricCanvasRef.current?.add(img);
         fabricCanvasRef.current?.renderAll();
-        clearSelectedImage()
+        clearSelectedImage();
       });
     }
-
   }, [selectedImage]);
-
 
   const addRect = () => {
     if (fabricCanvasRef.current) {
@@ -123,9 +120,6 @@ const CanvasBoard = () => {
     }
   };
 
-
-
-
   return (
     <div className="relative flex items-center justify-center flex-col gap-6">
       <ShapesContainer
@@ -141,7 +135,7 @@ const CanvasBoard = () => {
         className="absolute hidden"
         size="sm"
       >
-        <XCircle className="h-4 w-4"/>
+        <XCircle className="h-4 w-4" />
       </Button>
       {/* <button */}
       {/*   ref={deleteButtonRef} */}

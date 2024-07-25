@@ -2,7 +2,6 @@ import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import MobileSidebar from "./mobile-sidebar";
 import ScreenRecord from "./screen-record";
-import dynamic from "next/dynamic";
 
 const Navbar = () => {
   return (

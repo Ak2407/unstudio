@@ -76,11 +76,10 @@ const Sidebar = () => {
   };
 
   const handleBlobClick = (blob) => {
-    // const remotionUrl = `${
-    //   process.env.NEXT_PUBLIC_REMOTION_URL
-    // }/?videoUrl=${encodeURIComponent(blob.url)}`;
-    // window.open(remotionUrl, "_blank");
-    router.push(blob.url);
+    const remotionUrl = `${
+      process.env.NEXT_PUBLIC_REMOTION_URL
+    }/?videoUrl=${encodeURIComponent(blob.url)}`;
+    window.open(remotionUrl, "_blank");
   };
 
   return (

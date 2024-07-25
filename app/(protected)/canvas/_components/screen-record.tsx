@@ -11,7 +11,7 @@ const ScreenRecord = () => {
   const [mediaBlobUrl, setMediaBlobUrl] = useState<string | undefined>(
     undefined
   );
-  const [mediaBlob, setMediaBlob] = useState<Blob | null>(null); // Store the actual Blob
+  const [mediaBlob, setMediaBlob] = useState<Blob | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const mediaChunks = useRef<Blob[]>([]);
   const mediaStream = useRef<MediaStream | null>(null);
@@ -20,7 +20,6 @@ const ScreenRecord = () => {
 
   useEffect(() => {
     return () => {
-      // Cleanup media stream when component unmounts
       if (mediaStream.current) {
         mediaStream.current.getTracks().forEach((track) => track.stop());
       }
@@ -30,11 +29,11 @@ const ScreenRecord = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!mediaBlob) return; // Use the Blob object
+    if (!mediaBlob) return;
 
     setUploading(true);
     const formData = new FormData();
-    formData.append("file", mediaBlob); // Append the Blob object
+    formData.append("file", mediaBlob);
 
     try {
       const response = await fetch("/api/s3-upload-blob", {
@@ -71,8 +70,8 @@ const ScreenRecord = () => {
       mediaRecorder.current.onstop = () => {
         const blob = new Blob(mediaChunks.current, { type: "video/webm" });
         const url = URL.createObjectURL(blob);
-        setMediaBlob(blob); // Set the Blob object
-        setMediaBlobUrl(url); // Set the URL for viewing
+        setMediaBlob(blob);
+        setMediaBlobUrl(url);
         setStatus("stopped");
         mediaChunks.current = [];
       };

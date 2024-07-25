@@ -75,6 +75,14 @@ const Sidebar = () => {
     }
   };
 
+  const handleBlobClick = (blob) => {
+    // const remotionUrl = `${
+    //   process.env.NEXT_PUBLIC_REMOTION_URL
+    // }/?videoUrl=${encodeURIComponent(blob.url)}`;
+    // window.open(remotionUrl, "_blank");
+    router.push(blob.url);
+  };
+
   return (
     <div className=" flex flex-col items-center  border-r border-gray-200 h-screen overflow-y-auto ">
       <div className="  flex items-center justify-center w-full flex-col gap-4 bg-white p-2 ">
@@ -132,6 +140,7 @@ const Sidebar = () => {
         {blobs.map((blob, index) => (
           <video
             key={index}
+            onClick={() => handleBlobClick(blob)}
             src={blob.url}
             className="aspect-video cursor-pointer hover:opacity-80 "
           />
